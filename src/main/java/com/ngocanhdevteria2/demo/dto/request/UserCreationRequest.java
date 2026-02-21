@@ -1,6 +1,8 @@
 package com.ngocanhdevteria2.demo.dto.request;
 
 
+import com.ngocanhdevteria2.demo.exception.ErrorCode;
+import com.ngocanhdevteria2.demo.validator.BirthConstraint;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,12 +15,15 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
-    @Size(min = 2, message = "USERNAME_INVALID")
+    @Size(min = 6, message = "USERNAME_INVALID")
     String username;
-    @Size(min = 2, max = 50, message = "INVALID_PASSWORD")
+    @Size(min = 6, max = 50, message = "INVALID_PASSWORD")
     String password;
     String firstName;
     String lastName;
+
+
+    @BirthConstraint(min = 16, message = "INVALID_BIRTHDATE")
     LocalDate birthDate;
 
 

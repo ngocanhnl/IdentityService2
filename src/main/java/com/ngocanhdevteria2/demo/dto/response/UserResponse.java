@@ -1,5 +1,6 @@
 package com.ngocanhdevteria2.demo.dto.response;
 
+import com.ngocanhdevteria2.demo.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,5 +18,5 @@ public class UserResponse {
     String firstName;
     String lastName;
     LocalDate birthDate;
-    Set<String> roles;
+    Set<RoleResponse> roles;
 }

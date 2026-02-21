@@ -1,8 +1,6 @@
 package com.ngocanhdevteria2.demo.controller;
 
-import com.ngocanhdevteria2.demo.dto.request.ApiResponse;
-import com.ngocanhdevteria2.demo.dto.request.AuthenticationRequest;
-import com.ngocanhdevteria2.demo.dto.request.IntrospectRequest;
+import com.ngocanhdevteria2.demo.dto.request.*;
 import com.ngocanhdevteria2.demo.dto.response.AuthenticationResponse;
 import com.ngocanhdevteria2.demo.dto.response.IntrospectResponse;
 import com.ngocanhdevteria2.demo.service.AuthenticationService;
@@ -40,4 +38,22 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .build();
+    }
+
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        var result =  authenticationService.refreshToken(request);
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(result)
+                .build();
+    }
+
+
 }
