@@ -7,6 +7,7 @@ spring:
     name: ngocanhdevteria2
   datasource:
     url: "jdbc:mysql://localhost:3307/identity_service"
+    driverClassName: "com.mysql.cj.jdbc.Driver"
     username: root
     password: root
   jpa:
@@ -16,3 +17,5 @@ spring:
 
 jwt:
   signerKey: "c9hs5p4qYCVuHrvFNGR1rd5mXJ7CC8ol86gH1FUd9/sbLa9afuxex2XqiMkMiRyZ"
+  valid-duration: 20 # in second
+  refreshable-duration: 120 # insecond

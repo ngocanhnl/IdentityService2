@@ -42,6 +42,8 @@ public class UserService {
 
 
     public UserResponse createUser(UserCreationRequest req){
+        log.info("Serivices: Create user");
+
         if (userRepository.existsByUsername(req.getUsername()))
             throw new AppException(ErrorCode.USER_EXISTED);
         User user = userMapper.toUser(req);
