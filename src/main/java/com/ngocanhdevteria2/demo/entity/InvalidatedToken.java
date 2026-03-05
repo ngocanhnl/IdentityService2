@@ -1,11 +1,12 @@
 package com.ngocanhdevteria2.demo.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
 
 @Entity
 @Getter
@@ -17,6 +18,6 @@ import java.util.Date;
 public class InvalidatedToken {
     @Id
     String id;
-    Date expiryTime;
 
+    Date expiryTime;
 }

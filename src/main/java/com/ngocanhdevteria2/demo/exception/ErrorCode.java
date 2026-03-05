@@ -1,8 +1,9 @@
 package com.ngocanhdevteria2.demo.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+
+import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
@@ -12,7 +13,7 @@ public enum ErrorCode {
     INVALID_KEY(1001, "INVALID_KEY", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTS(1005, "User Not exists", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1006, "UNAUTHENTICATED", HttpStatus.UNAUTHORIZED),
-    USER_EXISTED(1002,"User existsted", HttpStatus.BAD_REQUEST),
+    USER_EXISTED(1002, "User existsted", HttpStatus.BAD_REQUEST),
     INVALID_BIRTHDATE(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     ;
@@ -26,6 +27,4 @@ public enum ErrorCode {
     private int code;
     private String message;
     private HttpStatusCode statusCode;
-
-
 }

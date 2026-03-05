@@ -1,20 +1,20 @@
 package com.ngocanhdevteria2.demo.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.ngocanhdevteria2.demo.dto.request.RoleRequest;
 import com.ngocanhdevteria2.demo.dto.response.RoleResponse;
-import com.ngocanhdevteria2.demo.entity.Role;
 import com.ngocanhdevteria2.demo.mapper.RoleMapper;
 import com.ngocanhdevteria2.demo.repository.PermissionRepository;
 import com.ngocanhdevteria2.demo.repository.RoleRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -37,11 +37,10 @@ public class RoleService {
         return roleMapper.toRoleResponse(role);
     }
 
-
     public List<RoleResponse> getAll() {
         var roles = roleRepository.findAll();
 
-        return  roles.stream().map(roleMapper::toRoleResponse).toList();
+        return roles.stream().map(roleMapper::toRoleResponse).toList();
     }
 
     public void delete(String id) {

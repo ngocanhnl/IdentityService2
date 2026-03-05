@@ -1,22 +1,23 @@
 package com.ngocanhdevteria2.demo.configuration;
 
+import java.io.IOException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ngocanhdevteria2.demo.dto.request.ApiResponse;
-import com.ngocanhdevteria2.demo.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngocanhdevteria2.demo.dto.request.ApiResponse;
+import com.ngocanhdevteria2.demo.exception.ErrorCode;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+    public void commence(
+            HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
         ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
 
@@ -28,11 +29,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .message(errorCode.getMessage())
                 .build();
 
-        //Chuyen obj ve string
+        // Chuyen obj ve string
         ObjectMapper mapper = new ObjectMapper();
 
         response.getWriter().write(mapper.writeValueAsString(apiResponse));
-
 
         response.flushBuffer();
     }

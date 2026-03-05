@@ -1,10 +1,10 @@
 package com.ngocanhdevteria2.demo.dto.request;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
@@ -18,6 +18,4 @@ public class UserUpdateRequest {
     LocalDate birthDate;
 
     List<String> roles;
-
-
 }

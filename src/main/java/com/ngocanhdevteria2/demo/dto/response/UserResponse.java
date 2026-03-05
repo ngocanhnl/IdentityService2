@@ -1,11 +1,10 @@
 package com.ngocanhdevteria2.demo.dto.response;
 
-import com.ngocanhdevteria2.demo.entity.Role;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.time.LocalDate;
 import java.util.Set;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor

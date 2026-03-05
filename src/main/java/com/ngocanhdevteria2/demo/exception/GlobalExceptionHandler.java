@@ -1,17 +1,17 @@
 package com.ngocanhdevteria2.demo.exception;
 
-import com.ngocanhdevteria2.demo.dto.request.ApiResponse;
+import java.util.Map;
+import java.util.Objects;
+
 import jakarta.validation.ConstraintViolation;
-import org.springframework.expression.AccessException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.ngocanhdevteria2.demo.dto.request.ApiResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,25 +36,22 @@ public class GlobalExceptionHandler {
         try {
             errorCode = ErrorCode.valueOf(enumKey);
 
+            var contrainVioldation =
+                    ex.getBindingResult().getAllErrors().getFirst().unwrap(ConstraintViolation.class);
 
-            var contrainVioldation = ex.getBindingResult()
-                    .getAllErrors().getFirst().unwrap(ConstraintViolation.class);
-
-            //Lay params duoc truyen vao trong annotation validation
+            // Lay params duoc truyen vao trong annotation validation
             attributes = contrainVioldation.getConstraintDescriptor().getAttributes();
 
-
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 
         }
 
-
-
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setMessage(Objects.nonNull(attributes) ?
-               mapAttribute(errorCode.getMessage(),attributes) :errorCode.getMessage()
+        apiResponse.setMessage(
+                Objects.nonNull(attributes)
+                        ? mapAttribute(errorCode.getMessage(), attributes)
+                        : errorCode.getMessage());
 
-                );
         apiResponse.setCode(errorCode.getCode());
 
         return ResponseEntity.badRequest().body(apiResponse);
@@ -66,16 +63,14 @@ public class GlobalExceptionHandler {
         return message.replace("{" + MIN_ATTRIBUTE + "}", minValue);
     }
 
-
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException ex) {
         ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
-        return ResponseEntity.status(errorCode.getStatusCode()).body(
-                ApiResponse.builder()
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.builder()
                         .code(errorCode.getCode())
                         .message(errorCode.getMessage())
-                        .build()
-        );
+                        .build());
     }
 
     @ExceptionHandler(value = AppException.class)
@@ -84,10 +79,6 @@ public class GlobalExceptionHandler {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage(errorCode.getMessage());
         apiResponse.setCode(errorCode.getCode());
-        return ResponseEntity
-                .status(errorCode.getStatusCode())
-                .body(apiResponse);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
-
-
 }
