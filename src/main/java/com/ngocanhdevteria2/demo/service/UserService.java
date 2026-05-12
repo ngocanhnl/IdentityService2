@@ -3,6 +3,8 @@ package com.ngocanhdevteria2.demo.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.ngocanhdevteria2.demo.constant.PredefinedRole;
+import com.ngocanhdevteria2.demo.entity.Role;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +16,7 @@ import com.ngocanhdevteria2.demo.dto.request.UserCreationRequest;
 import com.ngocanhdevteria2.demo.dto.request.UserUpdateRequest;
 import com.ngocanhdevteria2.demo.dto.response.UserResponse;
 import com.ngocanhdevteria2.demo.entity.User;
-import com.ngocanhdevteria2.demo.enums.Role;
+
 import com.ngocanhdevteria2.demo.exception.AppException;
 import com.ngocanhdevteria2.demo.exception.ErrorCode;
 import com.ngocanhdevteria2.demo.mapper.UserMapper;
@@ -48,9 +50,9 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(req.getPassword()));
 
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-        // user.setRoles(roles);
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+        user.setRoles(roles);
 
         try{
             user = userRepository.save(user);
@@ -63,7 +65,7 @@ public class UserService {
     }
     // @Kiem tra truoc khi ham chay, lay trong token
     // @PreAuthorize("hasRole('ADMIN')") //Mac dinh map voi cac phan co prefix ROLE_ o truoc
-    @PreAuthorize("hasAuthority('UPDATE_DATA')") // Map voi permission
+//    @PreAuthorize("hasAuthority('UPDATE_DATA')") // Map voi permission
     public List<UserResponse> getAllUsers() {
         log.info("Method Get all users");
         //        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
